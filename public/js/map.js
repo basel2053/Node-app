@@ -1,7 +1,7 @@
 // const map = L.map('map').setView([27.1805801, 31.6902284], 6);
 const map = L.map('map', {
 	scrollWheelZoom: false,
-}).setView([27.1805801, 31.6902284], 6);
+}).setView([27.1805801, 30.3902284], 6);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	maxZoom: 19,
 }).addTo(map);
@@ -153,5 +153,3 @@ closeBtns.forEach(btn => {
 		}
 	});
 });
-
-console.log(projects.length);
