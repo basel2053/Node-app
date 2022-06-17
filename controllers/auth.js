@@ -118,7 +118,6 @@ exports.postSignup = (req, res, next) => {
 	if (!errors.isEmpty()) {
 		console.log(errors.array());
 		return res.status(422).render('auth/signup', {
-			// 422 indicating that validation failed
 			title: 'Sign up',
 			path: '/signup',
 			errorMessage: errors.array()[0].msg,
