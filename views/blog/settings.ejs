@@ -1,0 +1,68 @@
+<%-include('../includes/head.ejs')%>
+<link rel="stylesheet" href="/css/profile-settings.css">
+    <%-include('../includes/navigation.ejs')%>
+
+        <div class="container main-container">
+            <div class="header">
+                <div class="user">
+                    <img src="/<%if (currentUser.profilePicture) {%><%=currentUser.profilePicture%><% } else {%>assets/default-profile.png<%}%>" alt="User photo" class="user-photo" id="user-img">
+                    <span class="user-name"><%=currentUser.username%></span>
+                </div>
+                <form action="/blog/user/<%=currentUser._id%>" method="POST" id="delForm" class="me-5">
+                    <input type="hidden" name="userId" value="<%=currentUser._id%>">
+                    <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                    <button type="submit" id="delBtn" class="delete-btn" onclick="deleteAccount()">Delete Account</button>
+                </form>
+            </div>
+        
+            <div class="content">
+                <nav class="sidebar">
+                    <ul class="side-nav">
+                        <li class="side-nav__item ">
+                            <a href="/blog/user/<%=currentUser.username%>" class="side-nav__link">
+                                <i class="fa-solid fa-user"></i>PROFILE
+                            </a>
+                        </li>
+                        <li class="side-nav__item side-nav__item--active">
+                            <a href="/blog/settings" class="side-nav__link">
+                                <i class="fa-solid fa-gear"></i> SETTINGS
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+        
+                <main class="main-view">
+        
+                    <h2 class="main--heading">ABOUT</h2>
+                    <h5 class="sub--heading">Set your profile name, email, and update your password, or upload a profile
+                        picture.</h6>
+                        <hr />
+                        <% if (errorMessage) { %>
+                            <div class="mb-3" style="color:red;">
+                                <%= errorMessage %>
+                            </div>
+                            <% } %>
+                        <form action="/blog/settings" method="POST" enctype="multipart/form-data" class="w-75 m-auto">
+                            <label for="fileInput" class="form-label file-label">
+                                <i class="settingsPPIcon far fa-user-circle me-2"></i>
+                                <span>Profile Picture</span>
+                            </label>
+                            <input type="file" id="fileInput" name='image' style="display: none" />
+                            <label for="email" class="form-label">Email</label>
+                            <input type="text" class='updateInputs form-control' id="email" name="email" value="<%=oldInputs.email%>">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class='updateInputs form-control' id="username" name="username" value="<%=oldInputs.username%>">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class='updateInputs form-control' id="password" name="password">
+                            <input type="hidden" name="currentUsername" value="<%=currentUser.username%>">
+                            <input type="hidden" name="userId" value="<%=currentUser._id%>">
+                            <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                            <button type="submit" id="upBtn" class="btn update-btn" disabled>Update Account</button>
+                        </form>
+                </main>
+            </div>
+        
+        </div>
+        <%-include('../includes/end.ejs') %>
+        <script src="/js/non-home.js"></script>
+        <script src="/js/settings.js"></script>

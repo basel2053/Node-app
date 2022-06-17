@@ -1,0 +1,46 @@
+<%-include('../includes/head.ejs')%>
+<link rel="stylesheet" href="/css/blog.css">
+<link rel="stylesheet" href="/css/post.css">
+    <%-include('../includes/navigation.ejs')%>
+    <div class="" style="margin-top:120px;"></div>
+    <div class="post-container">
+    <div class="post">
+        <%if(post.photo) { %>
+            <div class="img-container m-auto">
+                <img class="postImg  img-fluid" src="/<%=post.photo%>" alt="" />
+            </div>
+            <% } %>
+                <div class="postInfo">
+                    <span class="postTitle">
+                        <h2 href="/blog/post/<%=post._id%>" class="normalTitle">
+                            <%=post.title%>
+                        </h2>
+                    </span>
+                    <div class="postAuth">
+                    <a href="/blog/user/<%=post.username%>"><p>Author: <%=post.username%></p></a>
+                </div>
+                    <!-- <hr /> -->
+                    <span class="postDate">
+                        <%=new Date (post.createdAt).toDateString()%>
+                    </span>
+                </div>
+                <hr>
+                <p class="postDesc">
+                    <%=post.description%>
+                </p>
+                <% if(post.username==currentUser.username) { %>
+                    <div class="singlePostEdit d-flex justify-content-end">
+                        <a href="/blog/edit-post/<%=post._id%>?editPost=true"><i class="singlePostIcon far fa-edit"></i></a>
+                        <form action="/blog/delpost" method="POST">
+                            <input type="hidden" name="username" value="<%=currentUser.username%>">
+                            <input type="hidden" name="postId" value="<%=post._id%>">
+                            <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                            <button type="submit"><i class="singlePostIcon far fa-trash-alt"></i></button>
+                        </form>
+                    </div>
+                    <% } %>
+    </div>
+    </div>
+
+        <%-include('../includes/end.ejs') %>
+            <script src="/js/non-home.js"></script>

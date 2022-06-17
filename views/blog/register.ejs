@@ -1,0 +1,26 @@
+<%-include('../includes/head.ejs')%>
+<link rel="stylesheet" href="/css/blog-login.css">
+<link rel="stylesheet" href="/css/blog-register.css">
+<%-include('../includes/navigation.ejs')%>
+<div class="login">
+    <div class="img-container"></div>
+    <span class="loginTitle">Sign Up</span>
+    <% if (errorMessage) { %>
+        <div class="mb-3" style="color:red;">
+            <%= errorMessage %>
+        </div>
+        <% } %>
+            <form action="/blog/register" method="POST" class="loginForm mb-3">
+                <label for="email">Email</label>
+                <input class="loginInput form-control" type="text" name="email" id="email" placeholder="Enter your email..." value="<%=oldInputs.email%>" />
+                <label for="username">Username</label>
+                <input class="loginInput form-control" type="text" name="username" id="username" placeholder="Enter your username..."
+                    value="<%=oldInputs.username%>" />
+                <label for="password">Password</label>
+                <input class="loginInput form-control" type="password" name="password" id="password" placeholder="Enter your password..." value="<%=oldInputs.password%>"/>
+                <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                <button class="loginButton mt-4" type="submit">Register</button>
+            </form>
+</div>
+    <%-include('../includes/end.ejs') %>
+    <script src="/js/non-home.js"></script>

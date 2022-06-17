@@ -1,0 +1,35 @@
+<%-include('../includes/head.ejs')%>
+<link rel="stylesheet" href="/css/post-edit.css">
+    <%-include('../includes/navigation.ejs')%>
+    <div class="container main-container">
+        <div class="img-container text-center">
+            <img class="writeImg img-fluid" src="<% if (editPost && post.photo) {%>/<%=post.photo%><% } else { %>https://rands.com/img/noimg.jpg<% } %>" alt="" id="post-img" />
+        </div>
+        <% if (errorMessage) { %>
+            <div style="color:red;" class="ms-5">
+                <%= errorMessage %>
+            </div>
+            <% } %>
+        <form action="/blog/<%if(editPost) { %>edit-post<% } else { %>post<% } %>" method="post" enctype="multipart/form-data" class="writeForm">
+            <div class="writeFormGroup m-auto">
+                <label For="fileInput">
+                    <i class="writeIcon fas fa-plus d-flex"></i>
+                </label>
+                <input id="fileInput" type="file" name="image" style="display: none" accept="image/*" />
+                <input class="writeInput" placeholder="Title" type="text" name="title" autofocus="true" value="<% if (editPost || hasError){ %><%=post.title%><% }%>"/>
+            </div>
+            <div class="writeFormGroup m-auto container-fluid">
+                <textarea class="writeInput writeText" name="description" placeholder="List your description..." type="text"><% if (editPost || hasError){%><%=post.description%><%}%></textarea>
+            </div>
+            <% if (editPost) { %>
+                <input type="hidden" name="postId" value="<%= post._id%>">
+                <input type="hidden" name="postPhoto" value="<%= post.photo%>">
+                <input type="hidden" name="username" value="<%=currentUser.username%>">
+                <% } %>
+            <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+            <button class="writeSubmit" type="submit" ><% if (editPost) { %>Update<% } else { %>Publish<% } %></button>
+        </form>
+        </div>
+        <%-include('../includes/end.ejs') %>
+            <script src="/js/non-home.js"></script>
+            <script src="/js/post.js"></script>

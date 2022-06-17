@@ -1,0 +1,82 @@
+<%-include('../includes/head.ejs')%>
+<link rel="stylesheet" href="/css/profile-settings.css">
+    <%-include('../includes/navigation.ejs')%>
+
+        <div class="container main-container">
+            <div class="header">
+                <div class="user">
+                    <img src="/<%if (currentUser.profilePicture) {%><%=currentUser.profilePicture%><% } else {%>assets/default-profile.png<%}%>" alt="User photo" class="user-photo">
+                    <span class="user-name"><%=user.username%></span>
+                </div>
+                <form action="#" class="search me-5">
+                    <input type="text" id="filter" class="search__input" placeholder="Search Posts...">
+                    <button class="search__button">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+            </div>
+        
+            <div class="content">
+                <nav class="sidebar">
+                    <ul class="side-nav">
+                        <li class="side-nav__item side-nav__item--active">
+                            <a href="/blog/user/<%=currentUser.username%>" class="side-nav__link">
+                                <i class="fa-solid fa-user"></i>PROFILE
+                            </a>
+                        </li>
+                        <li class="side-nav__item ">
+                            <a href="/blog/settings" class="side-nav__link">
+                                <i class="fa-solid fa-gear"></i> SETTINGS
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+        
+                <main class="main-view">
+                    <% if(posts.length > 0 ) { %>
+                        <div class="posts">
+                    <%for(post of posts) {%>
+                    
+                        <div class="post">
+                            <%if(post.photo) { %>
+                                <img class="postImg img-fluid" src="/<%=post.photo%>" alt="" />
+                                <% } %>
+                                    <div class="postInfo">
+                                        <span class="postTitle">
+                                            <a href="/blog/post/<%=post._id%>">
+                                                <%=post.title%>
+                                            </a>
+                                        </span>
+                                        <span class="postDate">
+                                            <%=new Date (post.createdAt).toDateString()%>
+                                        </span>
+                                    </div>
+                                    <p class="postDesc">
+                                        <%=post.description%>
+                                    </p>
+                                    <% if(post.username==currentUser.username) { %>
+                                        <div class="singlePostEdit d-flex">
+                                            <a href="/blog/edit-post/<%=post._id%>?editPost=true"><i
+                                                    class="singlePostIcon far fa-edit"></i></a>
+                                            <form action="/blog/delpost" method="POST">
+                                                <input type="hidden" name="username" value="<%=currentUser.username%>">
+                                                <input type="hidden" name="postId" value="<%=post._id%>">
+                                                <input type="hidden" name="postPhoto" value="<%=post.photo%>">
+                                                <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                                                <button type="submit"><i class="singlePostIcon far fa-trash-alt"></i></button>
+                                            </form>
+                                        </div>
+                                        <% } %>
+                        </div>
+                        <% } %>
+                        </div>
+                        <% } else {%>
+                            <h2 class="ms-4 mt-4">No Posts Published yet...</h2>
+                        <% } %>
+                </main>
+            </div>
+        
+        </div>
+        <%-include('../includes/end.ejs') %>
+        <script src="/js/profile.js"></script>
+        <script src="/js/non-home.js"></script>

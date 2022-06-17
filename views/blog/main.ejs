@@ -1,0 +1,49 @@
+<%-include('../includes/head.ejs')%>
+<link rel="stylesheet" href="/css/blog.css">
+    </head>
+    <%-include('../includes/navigation.ejs')%>
+    <div class="" style="margin-top: 150px;"></div>
+    <h1>This is Our Blog</h1>
+    <div class="posts">
+
+    <%for(post of posts) {%>
+        
+    <div class="post">
+        <%if(post.photo) { %>
+        <img class="postImg img-fluid" src="<%=post.photo%>" alt="" />
+        <% } %>
+        <div class="postInfo">
+            <span class="postTitle">
+                <a href="/blog/post/<%=post._id%>">
+                <%=post.title%>
+                </a>
+            </span>
+            <!-- <div class="postAuth">
+                <p><%=post.username%></p>
+            </div> -->
+            <!-- <hr /> -->
+            <span class="postDate"><%=new Date (post.createdAt).toDateString()%></span>
+        </div>
+        <p class="postDesc">
+            <%=post.description%>
+        </p>
+        <% if(post.username == currentUser.username) { %>
+        <div class="singlePostEdit d-flex">
+            <a href="/blog/edit-post/<%=post._id%>?editPost=true"><i class="singlePostIcon far fa-edit"></i></a>
+            <form action="/blog/delpost" method="POST">
+                <input type="hidden" name="username" value="<%=currentUser.username%>">
+                <input type="hidden" name="postId" value="<%=post._id%>">
+                <input type="hidden" name="postPhoto" value="<%=post.photo%>">
+                <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                <button type="submit"><i class="singlePostIcon far fa-trash-alt"></i></button>
+            </form>
+        </div>
+        <% } %>
+    </div>
+    <% } %>
+    <div class="post post-creator">
+        <a href="/blog/write" class="btn btn-warning">CREATE NEW POST+</a>
+    </div>
+    </div>
+        <%-include('../includes/end.ejs') %>
+        <script src="/js/non-home.js"></script>
