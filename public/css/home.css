@@ -689,3 +689,28 @@ section .card .card-image img {
 	}
 }
 /* END constract with logo*/
+
+.logo-section {
+	width: 100%;
+	height: 100%;
+}
+
+.logo-container {
+	background: #efefef;
+	width: 100%;
+	height: 250px;
+}
+.logo-img-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	height: 100%;
+}
+.logo-section img {
+	display: block;
+	width: 150px;
+	height: 150px;
+	margin: 90px;
+	border-radius: 5%;
+}

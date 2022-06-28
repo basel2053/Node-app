@@ -101,3 +101,10 @@ exports.getSent = (req, res, next) => {
 		path: '/sent',
 	});
 };
+
+exports.getResources = (req, res, next) => {
+	res.render('user/resources', {
+		title: 'Resources',
+		path: '/resources',
+	});
+};

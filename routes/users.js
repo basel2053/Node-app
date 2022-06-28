@@ -20,5 +20,6 @@ router.post(
 	userController.postContact
 );
 router.get('/sent', userController.getSent);
+router.get('/resources', userController.getResources);
 
 module.exports = router;
